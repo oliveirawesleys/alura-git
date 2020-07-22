@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,7 @@ public class UsuarioController {
     }
 
     @RequestMapping("/nascimento")
-    public List<Usuario> procuraNascimento(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime data) {
+    public List<Usuario> procuraNascimento(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
         return repository.buscaDataNascimento(data).stream().collect(Collectors.toList());
     }
 
