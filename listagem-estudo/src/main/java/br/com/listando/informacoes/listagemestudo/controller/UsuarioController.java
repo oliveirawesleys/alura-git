@@ -4,9 +4,7 @@ import br.com.listando.informacoes.listagemestudo.entity.Usuario;
 import br.com.listando.informacoes.listagemestudo.repository.UsuarioRepository;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,6 +35,11 @@ public class UsuarioController {
     @RequestMapping("/nascimento")
     public List<Usuario> procuraNascimento(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
         return repository.buscaDataNascimento(data).stream().collect(Collectors.toList());
+    }
+
+    @PostMapping("/adiciona")
+    public Usuario adiciona(@RequestBody Usuario usuarioNovo) {
+        return repository.save(usuarioNovo);
     }
 
 
