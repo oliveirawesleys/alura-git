@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,5 +41,17 @@ public class UsuarioController {
         return repository.save(usuarioNovo);
     }
 
+    @PutMapping("/atualiza")
+    public ResponseEntity atualiza(long id, @RequestBody Usuario usuario) {
+        System.out.println(id);
+        return repository.findById(id)
+                .map(novo -> {
+                    novo.setNome(usuario.getNome());
+                    novo.setEmail(usuario.getEmail());
+                    novo.setNascimento(usuario.getNascimento());
+                    Usuario usuarioNovo = repository.save(novo);
+                    return ResponseEntity.ok().body(usuarioNovo);
+                }).orElse(ResponseEntity.notFound().build());
+    }
 
 }
