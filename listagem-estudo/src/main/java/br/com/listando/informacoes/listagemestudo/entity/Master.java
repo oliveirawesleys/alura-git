@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario {
+public class Master {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,9 @@ public class Usuario {
     private LocalDate nascimento;
     private String email;
 
-    public Usuario(String nome, LocalDate nascimento, String email) {
-        this.nome = nome;
-        this.nascimento = nascimento;
-        this.email = email;
+    public Master(Usuario user) {
+        this.nome = user.getNome();
+        this.nascimento = user.getNascimento();
+        this.email = user.getEmail();
     }
 }

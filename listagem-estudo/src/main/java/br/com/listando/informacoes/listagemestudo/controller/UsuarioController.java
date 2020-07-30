@@ -1,11 +1,19 @@
 package br.com.listando.informacoes.listagemestudo.controller;
 
+import br.com.listando.informacoes.listagemestudo.dto.UsuarioDto;
+import br.com.listando.informacoes.listagemestudo.entity.Master;
 import br.com.listando.informacoes.listagemestudo.entity.Usuario;
+import br.com.listando.informacoes.listagemestudo.form.MasterForm;
+import br.com.listando.informacoes.listagemestudo.form.UsuarioForm;
+import br.com.listando.informacoes.listagemestudo.repository.MasterRepository;
 import br.com.listando.informacoes.listagemestudo.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,11 +21,23 @@ import java.util.stream.Collectors;
 @RestController
 public class UsuarioController {
 
+    @Autowired
     private UsuarioRepository repository;
+
+    @Autowired
+    private MasterRepository repositoryMaster;
+
+/*    public UsuarioController() {
+
 
     UsuarioController(UsuarioRepository repository) {
         this.repository = repository;
     }
+
+    UsuarioController(MasterRepository repositoryMaster) {
+        this.repositoryMaster = repositoryMaster;
+    }
+*/
 
     @RequestMapping("/usuarios")
     public List listaTodosUsuarios() {
@@ -36,9 +56,23 @@ public class UsuarioController {
         return repository.buscaDataNascimento(data).stream().collect(Collectors.toList());
     }
 
-    @PostMapping("/adiciona")
+    @PostMapping("/adicionaOLD")
     public Usuario adiciona(@RequestBody Usuario usuarioNovo) {
         return repository.save(usuarioNovo);
+    }
+
+    @PostMapping("/adicionaMaster")
+    public void adicionaMaster(@RequestBody Usuario usuario) {
+        Master user = new Master(usuario);
+        repositoryMaster.save(user);
+    }
+
+    @PostMapping("/adiciona")
+    public ResponseEntity<UsuarioDto> adicionaDto(@RequestBody UsuarioForm usuarioForm, UriComponentsBuilder uriBuilder) {
+        Usuario usuarioNovo = usuarioForm.converter();
+        repository.save(usuarioNovo);
+        URI uri = uriBuilder.path("/adiciona/{id}").buildAndExpand(usuarioNovo.getId()).toUri();
+        return ResponseEntity.created(uri).body(new UsuarioDto(usuarioNovo));
     }
 
     @PutMapping("/atualiza")
@@ -51,6 +85,15 @@ public class UsuarioController {
                     novo.setNascimento(usuario.getNascimento());
                     Usuario usuarioNovo = repository.save(novo);
                     return ResponseEntity.ok().body(usuarioNovo);
+                }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @RequestMapping(value = "/remover", method = RequestMethod.DELETE)
+    public ResponseEntity<?> remover(long id) {
+        return repository.findById(id)
+                .map(usuario -> {
+                    repository.deleteById(id);
+                    return ResponseEntity.ok().build();
                 }).orElse(ResponseEntity.notFound().build());
     }
 
