@@ -22,9 +22,10 @@ public class Members {
     private Long cpf;
     private LocalDate born;
 
-    public Members(String name, Integer age, Long cpf, LocalDate born) {
+    public Members(String name, Integer age, Long cpf, String city, LocalDate born) {
         this.name = name;
         this.age = age;
+        this.city = city;
         this.cpf = cpf;
         this.born = born;
     }
