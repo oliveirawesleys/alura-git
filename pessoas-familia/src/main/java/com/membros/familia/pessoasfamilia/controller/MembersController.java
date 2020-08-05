@@ -1,5 +1,6 @@
 package com.membros.familia.pessoasfamilia.controller;
 
+import com.membros.familia.pessoasfamilia.dto.MemberWithCpfDto;
 import com.membros.familia.pessoasfamilia.dto.MembersDto;
 import com.membros.familia.pessoasfamilia.entity.Members;
 import com.membros.familia.pessoasfamilia.form.MembersForm;
@@ -28,12 +29,19 @@ public class MembersController {
         return MembersDto.convert(members);
     }
 
-    @GetMapping(path = {"/{id}"})
+/*    @GetMapping(path = {"/{id}"})
     private ResponseEntity listEspecific(@PathVariable Long id) {
        return repository.findById(id)
                 .map(member -> ResponseEntity.ok().body(member))
                 .orElse(ResponseEntity.notFound().build());
+    }*/
+
+    @GetMapping("/{id}")
+    private MemberWithCpfDto detail(@PathVariable Long id) {
+        Members member = repository.getOne(id);
+        return new MemberWithCpfDto(member);
     }
+
 
     //@GetMapping(path = {"/{name}"})
     private ResponseEntity searchName(@PathVariable String name) {
@@ -41,6 +49,8 @@ public class MembersController {
                 .map(m -> ResponseEntity.ok().body(m))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+
 
 /*    @PostMapping
     private void create(@RequestBody MembersForm memberForm) {
