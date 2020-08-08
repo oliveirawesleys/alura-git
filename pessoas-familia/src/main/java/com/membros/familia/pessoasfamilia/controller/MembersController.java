@@ -1,9 +1,9 @@
 package com.membros.familia.pessoasfamilia.controller;
 
-import com.membros.familia.pessoasfamilia.dto.MemberWithCpfDto;
 import com.membros.familia.pessoasfamilia.dto.MembersDto;
 import com.membros.familia.pessoasfamilia.entity.Members;
 import com.membros.familia.pessoasfamilia.form.MembersForm;
+import com.membros.familia.pessoasfamilia.form.RefreshMembersForm;
 import com.membros.familia.pessoasfamilia.repository.MembersRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,18 +29,24 @@ public class MembersController {
         return MembersDto.convert(members);
     }
 
-/*    @GetMapping(path = {"/{id}"})
+    @GetMapping(path = {"/{id}"})
     private ResponseEntity listEspecific(@PathVariable Long id) {
        return repository.findById(id)
                 .map(member -> ResponseEntity.ok().body(member))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+/*    @GetMapping("/{id}")
+    private ResponseEntity detail(@PathVariable Long id) {
+        return repository.findById(id)
+                .map(m -> {
+                    m.getName();
+                    m.getCpf();
+                    MembersDto mem = new MembersDto(m);
+                    return ResponseEntity.ok().body(mem);
+                }).orElse(ResponseEntity.notFound().build());
     }*/
 
-    @GetMapping("/{id}")
-    private MemberWithCpfDto detail(@PathVariable Long id) {
-        Members member = repository.getOne(id);
-        return new MemberWithCpfDto(member);
-    }
 
 
     //@GetMapping(path = {"/{name}"})
@@ -51,13 +57,6 @@ public class MembersController {
     }
 
 
-
-/*    @PostMapping
-    private void create(@RequestBody MembersForm memberForm) {
-        Members newMember = memberForm.converter();
-        repository.save(newMember);
-    }*/
-
     @PostMapping
     private ResponseEntity<MembersDto> newMember(@RequestBody @Valid MembersForm memberForm, UriComponentsBuilder uriBuilder) {
         Members newMember = memberForm.converter();
@@ -66,17 +65,32 @@ public class MembersController {
         return ResponseEntity.created(uri).body(new MembersDto(newMember));
     }
 
+    //@PutMapping("/{id}")
+    public ResponseEntity<MembersDto> refresh(@PathVariable Long id, @RequestBody @Valid RefreshMembersForm form) {
+        Members member = form.atualizar(id, repository);
+        return ResponseEntity.ok(new MembersDto(member));
+    }
+
     @PutMapping(value = "/{id}")
-    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody MembersForm member) {
+    public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid RefreshMembersForm member) {
         return repository.findById(id)
                 .map(m -> {
                     m.setName(member.getName());
-                    m.setAge(member.getAge());
-                    m.setCpf(member.getCpf());
+                    //m.setAge(member.getAge());
+                    //m.setCpf(member.getCpf());
                     m.setCity(member.getCity());
-                    m.setBorn(member.getBorn());
+                    //m.setBorn(member.getBorn());
                     Members updated = repository.save(m);
                     return ResponseEntity.ok().body(updated);
+                }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        return repository.findById(id)
+                .map(m -> {
+                    repository.deleteById(id);
+                    return ResponseEntity.ok().build();
                 }).orElse(ResponseEntity.notFound().build());
     }
 }
