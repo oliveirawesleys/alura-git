@@ -16,11 +16,4 @@ public class RefreshMembersForm {
     @NotNull @NotEmpty
     private String city;
 
-    public Members atualizar(Long id, MembersRepository repository) {
-        Members member = repository.getOne(id);
-        member.setName(this.name);
-        member.setCity(this.city);
-        repository.save(member);
-        return member;
-    }
 }
