@@ -20,11 +20,7 @@ public class AggregateForm {
     @NotNull
     private Integer age;
     private String city;
-    @NotNull
     private Long cpf;
     private LocalDate born;
 
-    public Aggregate converter() {
-        return new Aggregate(name, age, cpf, city, born);
-    }
 }

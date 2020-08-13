@@ -52,11 +52,12 @@ public class MembersController {
         URI uri = uriBuilder.path("/membros/{id}").buildAndExpand(newMember.getId()).toUri();
         return ResponseEntity.created(uri).body(new MembersDto(newMember));
     }
-
-/*    public void oldAggregate(AggregateForm aggregateForm) {
-        //Aggregate newAggregate =  aggregateForm.converter();
-        repository.save(aggregateForm);
-    }*/
+    @PostMapping("/aggregate")
+    public Members oldAggregate(@RequestBody @Valid AggregateForm aggregateForm) {
+        Members newAggregate =  new Members(aggregateForm.getName(), aggregateForm.getAge(), 0L,
+                aggregateForm.getCity(), aggregateForm.getBorn());
+        return repository.save(newAggregate);
+    }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid RefreshMembersForm member) {
