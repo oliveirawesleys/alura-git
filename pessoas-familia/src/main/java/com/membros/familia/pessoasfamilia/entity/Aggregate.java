@@ -22,5 +22,13 @@ public class Aggregate {
     private Long cpf;
     private LocalDate born;
 
+    public Aggregate(String name, Integer age, Long cpf, String city, LocalDate born) {
+        this.name = name;
+        this.age = age;
+        this.city = city;
+        this.cpf = cpf;
+        this.born = born;
+    }
+
 
 }

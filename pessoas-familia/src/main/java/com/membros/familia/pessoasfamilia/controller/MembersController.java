@@ -1,10 +1,15 @@
 package com.membros.familia.pessoasfamilia.controller;
 
+import com.membros.familia.pessoasfamilia.dto.AggregateDto;
 import com.membros.familia.pessoasfamilia.dto.MembersDto;
+import com.membros.familia.pessoasfamilia.entity.Aggregate;
 import com.membros.familia.pessoasfamilia.entity.Members;
+import com.membros.familia.pessoasfamilia.form.AggregateForm;
 import com.membros.familia.pessoasfamilia.form.MembersForm;
 import com.membros.familia.pessoasfamilia.form.RefreshMembersForm;
+import com.membros.familia.pessoasfamilia.repository.AggregateRepository;
 import com.membros.familia.pessoasfamilia.repository.MembersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,17 +22,19 @@ import java.util.List;
 @RequestMapping({"/membros"})
 public class MembersController {
 
+    @Autowired
     private MembersRepository repository;
 
-    public MembersController(MembersRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private AggregateRepository aggregateRepository;
+
 
     @GetMapping
     public List<MembersDto> listMembers() {
         List<Members> members = repository.findAll();
         return MembersDto.convert(members);
     }
+
 
     @GetMapping(path = {"/{id}"})
     public ResponseEntity listEspecific(@PathVariable Long id) {
@@ -36,6 +43,8 @@ public class MembersController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+
+
     @PostMapping
     public ResponseEntity<MembersDto> newMember(@RequestBody @Valid MembersForm memberForm, UriComponentsBuilder uriBuilder) {
         Members newMember = memberForm.converter();
@@ -43,6 +52,11 @@ public class MembersController {
         URI uri = uriBuilder.path("/membros/{id}").buildAndExpand(newMember.getId()).toUri();
         return ResponseEntity.created(uri).body(new MembersDto(newMember));
     }
+
+/*    public void oldAggregate(AggregateForm aggregateForm) {
+        //Aggregate newAggregate =  aggregateForm.converter();
+        repository.save(aggregateForm);
+    }*/
 
     @PutMapping(value = "/{id}")
     public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid RefreshMembersForm member) {
