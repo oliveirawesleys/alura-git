@@ -36,14 +36,17 @@ public class MembersController {
     }
 
 
-    @GetMapping(path = {"/{id}"})
+    //@GetMapping(path = {"/{id}"})
     public ResponseEntity listEspecific(@PathVariable Long id) {
        return repository.findById(id)
                 .map(member -> ResponseEntity.ok().body(member))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-
+    @GetMapping(path = {"/{city}"})
+    public List<Members> listCity(@PathVariable String city) {
+        return repository.buscaCidade(city);
+    }
 
     @PostMapping
     public ResponseEntity<MembersDto> newMember(@RequestBody @Valid MembersForm memberForm, UriComponentsBuilder uriBuilder) {

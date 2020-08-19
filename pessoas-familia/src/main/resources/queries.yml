@@ -1,0 +1,2 @@
+consulta:
+  'SELECT t FROM Members t WHERE t.city = ?'
