@@ -1,12 +1,18 @@
 package com.algaworks.osworks.osworksapi.domain.model;
 
+import com.algaworks.osworks.osworksapi.domain.exception.NegocioException;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class OrdemServico {
 
@@ -22,5 +28,23 @@ public class OrdemServico {
     private StatusOrdemServico status;
     private OffsetDateTime dataAbertura;
     private OffsetDateTime dataFinalizacao;
+    @OneToMany(mappedBy = "ordemServico")
+    private List<Comentario> comentarios = new ArrayList<>();
+
+    public boolean podeSerFinalizada() {
+        return StatusOrdemServico.ABERTA.equals(getStatus());
+    }
+
+    public boolean naoPodeSerFinalizada() {
+        return !podeSerFinalizada();
+    }
+
+    public void finalizar() {
+        if (naoPodeSerFinalizada()) {
+            throw new NegocioException("Ordem de serviço não pode ser finalizada.");
+        }
+        setStatus(StatusOrdemServico.FINALIZADA);
+        setDataFinalizacao(OffsetDateTime.now());
+    }
 
 }

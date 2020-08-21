@@ -1,10 +1,13 @@
 package com.algaworks.osworks.osworksapi.domain.service;
 
+import com.algaworks.osworks.osworksapi.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.osworks.osworksapi.domain.exception.NegocioException;
 import com.algaworks.osworks.osworksapi.domain.model.Cliente;
+import com.algaworks.osworks.osworksapi.domain.model.Comentario;
 import com.algaworks.osworks.osworksapi.domain.model.OrdemServico;
 import com.algaworks.osworks.osworksapi.domain.model.StatusOrdemServico;
 import com.algaworks.osworks.osworksapi.domain.repository.ClienteRepository;
+import com.algaworks.osworks.osworksapi.domain.repository.ComentarioRepository;
 import com.algaworks.osworks.osworksapi.domain.repository.OrdemServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,9 @@ public class GestaoOrdemServicoService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private ComentarioRepository comentarioRepository;
+
     public OrdemServico criar(OrdemServico ordemServico) {
         Cliente cliente = clienteRepository.findById(ordemServico.getCliente().getId())
                 .orElseThrow(() -> new NegocioException("Cliente não encontrado."));
@@ -30,5 +36,25 @@ public class GestaoOrdemServicoService {
         ordemServico.setDataAbertura(OffsetDateTime.now());
 
         return ordemServicoRepository.save(ordemServico);
+    }
+
+    public Comentario adicionarComentario(Long ordemServicoId, String descricao) {
+        OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoId)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Ordem de serviço não encontrada."));
+
+        Comentario comentario = new Comentario();
+        comentario.setDataEnvio(OffsetDateTime.now());
+        comentario.setDescricao(descricao);
+        comentario.setOrdemServico(ordemServico);
+
+        return comentarioRepository.save(comentario);
+    }
+
+    public void finalizar(Long ordemServicoId) {
+        OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoId)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Ordem de serviço não encontrada."));
+
+        ordemServico.finalizar();
+        ordemServicoRepository.save(ordemServico);
     }
 }
