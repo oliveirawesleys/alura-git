@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1iXE2juEhpStbzUKQmH6WyDiE0N" />
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pom.xml" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Configuracao" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="br.com.alura.listavip.Configuracao" />
+      <module name="listadestinos" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.alura.listavip.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Configuracao" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="137" y="20" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602045421206">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="137" y="20" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1602045421206" />
+    <state x="412" y="149" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1602045420290">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="412" y="149" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1366.728@0.0.1366.728" timestamp="1602045420290" />
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1602045455034">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1602045455034" />
+    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1602045455034">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1602045455034" />
+    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1602045455033">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1602045455033" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1602045455034">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1602045455034" />
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup" timestamp="1602045353081">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="162" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1602045353081" />
+  </component>
+</project>
