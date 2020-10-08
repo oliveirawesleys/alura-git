@@ -1,4 +1,5 @@
 br\com\alura\listavip\repository\DestinoRepository.class
 br\com\alura\listavip\Configuracao.class
 br\com\alura\listavip\DestinoController.class
+br\com\alura\listavip\service\EmailService.class
 br\com\alura\listavip\model\Destino.class

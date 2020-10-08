@@ -2,6 +2,8 @@ package br.com.alura.listavip;
 
 import br.com.alura.listavip.model.Destino;
 import br.com.alura.listavip.repository.DestinoRepository;
+import br.com.alura.listavip.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DestinoController {
 
     private DestinoRepository destinoRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public DestinoController(DestinoRepository destinoRepository) {
         this.destinoRepository = destinoRepository;
@@ -35,8 +40,8 @@ public class DestinoController {
 
         Destino novoDestino = new Destino(pais, cidade, clima);
         destinoRepository.save(novoDestino);
+        emailService.enviar("gua", "guaygg@gmail.com");
         Iterable<Destino> destinos = destinoRepository.findAll();
-
         model.addAttribute("destinos", destinos);
         return "listadestinos";
     }
