@@ -40,7 +40,7 @@ public class DestinoController {
 
         Destino novoDestino = new Destino(pais, cidade, clima);
         destinoRepository.save(novoDestino);
-        emailService.enviar("gua", "guaygg@gmail.com");
+        emailService.enviar("Wes", "oliveira.wesleys@gmail.com");
         Iterable<Destino> destinos = destinoRepository.findAll();
         model.addAttribute("destinos", destinos);
         return "listadestinos";
