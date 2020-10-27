@@ -1,6 +1,6 @@
 package com.learning.spring.learning.domain.service;
 
-import com.learning.spring.learning.controller.User;
+import com.learning.spring.learning.domain.model.User;
 import com.learning.spring.learning.domain.exception.BusinessException;
 import com.learning.spring.learning.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

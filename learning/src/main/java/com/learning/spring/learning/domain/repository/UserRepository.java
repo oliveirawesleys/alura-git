@@ -1,6 +1,6 @@
 package com.learning.spring.learning.domain.repository;
 
-import com.learning.spring.learning.controller.User;
+import com.learning.spring.learning.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

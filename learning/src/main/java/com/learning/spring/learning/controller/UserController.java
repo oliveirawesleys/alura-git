@@ -1,5 +1,6 @@
 package com.learning.spring.learning.controller;
 
+import com.learning.spring.learning.domain.model.User;
 import com.learning.spring.learning.domain.repository.UserRepository;
 import com.learning.spring.learning.domain.service.RegisterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> find(@PathVariable Long id) {
+    public ResponseEntity<User> search(@PathVariable Long id) {
         Optional<User> user = userRepository.findById(id);
 
         if(user.isPresent()) {
