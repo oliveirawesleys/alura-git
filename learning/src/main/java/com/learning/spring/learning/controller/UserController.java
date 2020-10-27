@@ -1,6 +1,7 @@
 package com.learning.spring.learning.controller;
 
 import com.learning.spring.learning.domain.repository.UserRepository;
+import com.learning.spring.learning.domain.service.RegisterUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RegisterUserService registerUserService;
+
     @GetMapping
     public List<User> listUser() {
         return userRepository.findAll();
@@ -38,7 +42,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User add(@Valid @RequestBody User user) {
-        return userRepository.save(user);
+        return registerUserService.save(user);
     }
 
     @PutMapping("/{id}")
@@ -48,7 +52,7 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
         user.setId(id);
-        user = userRepository.save(user);
+        user = registerUserService.save(user);
         return ResponseEntity.ok(user);
     }
 
@@ -57,7 +61,7 @@ public class UserController {
         if(!userRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
-        userRepository.deleteById(id);
+        registerUserService.exclude(id);
         return ResponseEntity.noContent().build();
     }
 }
