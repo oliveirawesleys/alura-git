@@ -1,6 +1,7 @@
 package com.learning.spring.learning.exceptionhandler;
 
 import com.learning.spring.learning.domain.exception.BusinessException;
+import com.learning.spring.learning.domain.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -24,6 +25,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handlerEntityNotFound(BusinessException ex, WebRequest request) {
+        var status = HttpStatus.NOT_FOUND;
+
+        var problem = new Problem();
+        problem.setStatus(status.value());
+        problem.setTitle(ex.getMessage());
+        problem.setDate(OffsetDateTime.now());
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handlerBusiness(BusinessException ex, WebRequest request) {

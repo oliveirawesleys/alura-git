@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 @Entity
 public class User {
 
-    @NotNull(groups = ValidationGroups.UserId.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

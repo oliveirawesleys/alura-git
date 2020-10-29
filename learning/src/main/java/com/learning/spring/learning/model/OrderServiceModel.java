@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 public class OrderServiceModel {
 
     private Long id;
-    private String nameUser;
+    private UserAbstractModel user;
     private String description;
     private BigDecimal price;
     private StatusOrderService status;

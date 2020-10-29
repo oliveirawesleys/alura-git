@@ -3,7 +3,9 @@ package com.learning.spring.learning.controller;
 import com.learning.spring.learning.domain.model.OrderService;
 import com.learning.spring.learning.domain.repository.OrderServiceRepository;
 import com.learning.spring.learning.domain.service.ManagementOrderService;
+import com.learning.spring.learning.model.OrderServiceInputModel;
 import com.learning.spring.learning.model.OrderServiceModel;
+import org.hibernate.criterion.Order;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/order-service")
@@ -29,13 +32,14 @@ public class OrderServiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderService create(@Valid @RequestBody OrderService order) {
-        return managementOrderService.create(order);
+    public OrderServiceModel create(@Valid @RequestBody OrderServiceInputModel orderInput) {
+        OrderService order = toEntity(orderInput);
+        return toModel(managementOrderService.create(order));
     }
 
     @GetMapping
-    public List<OrderService> list() {
-        return orderServiceRepository.findAll();
+    public List<OrderServiceModel> list() {
+        return toCollectionModel(orderServiceRepository.findAll());
     }
 
     @GetMapping("/{orderServiceId}")
@@ -43,10 +47,30 @@ public class OrderServiceController {
         Optional<OrderService> orderService = orderServiceRepository.findById(orderServiceId);
 
         if (orderService.isPresent()) {
-            OrderServiceModel orderServiceModel = modelMapper.map(orderService.get(), OrderServiceModel.class);
+            OrderServiceModel orderServiceModel = toModel(orderService.get());
             return ResponseEntity.ok(orderServiceModel);
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{orderServiceId}/finish")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finish(@PathVariable Long orderServiceId) {
+        managementOrderService.finishOrderService(orderServiceId);
+    }
+
+    private OrderServiceModel toModel(OrderService orderService) {
+        return modelMapper.map(orderService, OrderServiceModel.class);
+    }
+
+    private List<OrderServiceModel> toCollectionModel(List<OrderService> orderServices) {
+        return orderServices.stream()
+                .map(orderService -> toModel(orderService))
+                .collect(Collectors.toList());
+    }
+
+    private OrderService toEntity(OrderServiceInputModel orderInput) {
+        return modelMapper.map(orderInput, OrderService.class);
     }
 }
