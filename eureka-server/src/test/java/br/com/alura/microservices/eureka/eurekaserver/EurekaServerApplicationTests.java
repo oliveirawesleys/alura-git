@@ -1,3 +1,4 @@
+/*
 package br.com.alura.microservices.eureka.eurekaserver;
 
 import org.junit.jupiter.api.Test;
@@ -11,3 +12,4 @@ class EurekaServerApplicationTests {
 	}
 
 }
+*/
