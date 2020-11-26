@@ -1,6 +1,7 @@
 package microservicefornecedor.fornecedor.service;
 
 import microservicefornecedor.fornecedor.model.InfoFornecedor;
+import microservicefornecedor.fornecedor.repository.InfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
