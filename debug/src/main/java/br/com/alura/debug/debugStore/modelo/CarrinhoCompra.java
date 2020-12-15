@@ -22,6 +22,10 @@ public class CarrinhoCompra {
 			double porcentagemDesconto = this.getFormaPagamento().getPorcentagemDesconto();
 			BigDecimal valorComDesconto = preco.multiply(new BigDecimal(porcentagemDesconto)).divide(new BigDecimal("100"));
 			BigDecimal valorProdutoComDesconto =  preco.subtract(valorComDesconto);
+			if (valorProdutoComDesconto.compareTo(new BigDecimal("700.00")) == 1) {
+				System.out.println("\nO produto " + produto.getDescricao() + " ganhou mais R$20,00 de desconto.");
+				valorProdutoComDesconto = valorProdutoComDesconto.subtract(new BigDecimal("20.00"));
+			}
 			total = total.add(valorProdutoComDesconto);
 		}
 		return total;
