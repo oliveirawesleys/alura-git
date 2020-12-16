@@ -26,10 +26,22 @@ public class CarrinhoCompra {
 				System.out.println("\nO produto " + produto.getDescricao() + " ganhou mais R$20,00 de desconto.");
 				valorProdutoComDesconto = valorProdutoComDesconto.subtract(new BigDecimal("20.00"));
 			}
-			total = total.add(valorProdutoComDesconto);
+			BigDecimal multiplicador = new BigDecimal(produto.getQuantidade());
+			total = total.add(valorProdutoComDesconto.multiply(multiplicador));
+		}
+		total = calcularPromocao(produtos, total);
+		return total;
+	}
+
+	private BigDecimal calcularPromocao(List<Produto> produtos, BigDecimal total) {
+		for (Produto produto : produtos) {
+			int quantidadeDescontar = produto.getQuantidade() / 3;
+			for (int i = 0; quantidadeDescontar > i; i++) {
+				total = total.subtract(produto.getPreco());
+			}
 		}
 		return total;
 	}
 
-	
+
 }
