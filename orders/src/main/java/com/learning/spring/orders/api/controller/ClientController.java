@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Arrays;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,12 +35,12 @@ public class ClientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Client addClient(@RequestBody Client newCliente) {
+    public Client addClient(@Valid @RequestBody Client newCliente) {
         return clienteRepository.save(newCliente);
     }
 
     @PutMapping("/{clientId}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long clientId, @RequestBody Client client) {
+    public ResponseEntity<Client> updateClient(@Valid @PathVariable Long clientId, @RequestBody Client client) {
         if (!clienteRepository.existsById(clientId)) {
             return ResponseEntity.notFound().build();
         }
