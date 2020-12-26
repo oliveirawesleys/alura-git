@@ -2,6 +2,7 @@ package com.learning.spring.orders.api.controller;
 
 import com.learning.spring.orders.domain.model.Client;
 import com.learning.spring.orders.domain.repository.ClienteRepository;
+import com.learning.spring.orders.domain.service.FormClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class ClientController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private FormClientService clientService;
 
     @GetMapping
     public List<Client> listClient() {
@@ -36,7 +40,7 @@ public class ClientController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Client addClient(@Valid @RequestBody Client newCliente) {
-        return clienteRepository.save(newCliente);
+        return clientService.save(newCliente);
     }
 
     @PutMapping("/{clientId}")
@@ -45,7 +49,7 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
         client.setId(clientId);
-        client = clienteRepository.save(client);
+        client = clientService.save(client);
 
         return ResponseEntity.ok().body(client);
     }
@@ -55,7 +59,7 @@ public class ClientController {
         if (!clienteRepository.existsById(clientId)) {
             return ResponseEntity.notFound().build();
         }
-        clienteRepository.deleteById(clientId);
+        clientService.remove(clientId);
 
         return ResponseEntity.noContent().build();
     }
