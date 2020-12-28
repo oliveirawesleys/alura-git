@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Getter
@@ -15,7 +16,7 @@ public class Problem {
 
     private Integer status;
     private String title;
-    private LocalDateTime dateHour;
+    private OffsetDateTime dateHour;
     private List<Field> fields;
 
     @Getter

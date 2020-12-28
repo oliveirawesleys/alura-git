@@ -1,5 +1,6 @@
 package com.learning.spring.orders.domain.model;
 
+import com.learning.spring.orders.domain.ValidationGroups;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
@@ -17,6 +19,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Client {
 
+    @NotNull(groups = ValidationGroups.ClientId.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
