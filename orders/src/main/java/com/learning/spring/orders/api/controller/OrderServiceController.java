@@ -1,8 +1,10 @@
 package com.learning.spring.orders.api.controller;
 
+import com.learning.spring.orders.api.model.OrderServiceModel;
 import com.learning.spring.orders.domain.model.OrderService;
 import com.learning.spring.orders.domain.repository.OrderServiceRepository;
 import com.learning.spring.orders.domain.service.ManagerOrderService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,9 @@ public class OrderServiceController {
     @Autowired
     private OrderServiceRepository orderServiceRepository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public OrderService create(@Valid @RequestBody OrderService orderService) {
@@ -34,11 +39,12 @@ public class OrderServiceController {
     }
 
     @GetMapping("/{orderServiceId}")
-    public ResponseEntity<OrderService> find(@PathVariable Long orderServiceId) {
+    public ResponseEntity<OrderServiceModel> find(@PathVariable Long orderServiceId) {
         Optional<OrderService> orderService = orderServiceRepository.findById(orderServiceId);
 
         if (orderService.isPresent()) {
-            return ResponseEntity.ok().body(orderService.get());
+            OrderServiceModel orderServiceModel = modelMapper.map(orderService.get(), OrderServiceModel.class);
+            return ResponseEntity.ok().body(orderServiceModel);
         }
         return ResponseEntity.notFound().build();
     }
