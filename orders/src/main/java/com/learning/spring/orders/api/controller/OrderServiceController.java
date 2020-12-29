@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/order-service")
@@ -29,13 +30,13 @@ public class OrderServiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderService create(@Valid @RequestBody OrderService orderService) {
-        return managerOrderService.create(orderService);
+    public OrderServiceModel create(@Valid @RequestBody OrderService orderService) {
+        return toModel(managerOrderService.create(orderService));
     }
 
     @GetMapping
-    public List<OrderService> list() {
-        return orderServiceRepository.findAll();
+    public List<OrderServiceModel> list() {
+        return toCollectionModel(orderServiceRepository.findAll());
     }
 
     @GetMapping("/{orderServiceId}")
@@ -43,9 +44,19 @@ public class OrderServiceController {
         Optional<OrderService> orderService = orderServiceRepository.findById(orderServiceId);
 
         if (orderService.isPresent()) {
-            OrderServiceModel orderServiceModel = modelMapper.map(orderService.get(), OrderServiceModel.class);
+            OrderServiceModel orderServiceModel = toModel(orderService.get());
             return ResponseEntity.ok().body(orderServiceModel);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    private OrderServiceModel toModel(OrderService orderService) {
+        return modelMapper.map(orderService, OrderServiceModel.class);
+    }
+
+    private List<OrderServiceModel> toCollectionModel(List<OrderService> ordersService) {
+        return ordersService.stream()
+                .map(orderService -> toModel(orderService))
+                .collect(Collectors.toList());
     }
 }

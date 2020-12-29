@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 public class OrderServiceModel {
 
     private Long id;
-    private String nameClient;
+    private ClientResumeModel client;
     private String description;
     private String price;
     private StatusOrderService status;
