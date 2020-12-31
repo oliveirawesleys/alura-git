@@ -1,6 +1,7 @@
 package com.learning.spring.orders.api.exceptionhandler;
 
 import com.learning.spring.orders.domain.exception.BusinessException;
+import com.learning.spring.orders.domain.exception.EntityNotFoundException;
 import org.apache.tomcat.jni.Local;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusiness(BusinessException ex, WebRequest request) {
         var status = HttpStatus.BAD_REQUEST;
+        Problem problem = new Problem();
+        problem.setStatus(status.value());
+        problem.setTitle(ex.getMessage());
+        problem.setDateHour(OffsetDateTime.now());
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntity(BusinessException ex, WebRequest request) {
+        var status = HttpStatus.NOT_FOUND;
         Problem problem = new Problem();
         problem.setStatus(status.value());
         problem.setTitle(ex.getMessage());

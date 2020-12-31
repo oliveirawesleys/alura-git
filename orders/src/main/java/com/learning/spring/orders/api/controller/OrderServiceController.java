@@ -1,5 +1,6 @@
 package com.learning.spring.orders.api.controller;
 
+import com.learning.spring.orders.api.model.OrderServiceInput;
 import com.learning.spring.orders.api.model.OrderServiceModel;
 import com.learning.spring.orders.domain.model.OrderService;
 import com.learning.spring.orders.domain.repository.OrderServiceRepository;
@@ -30,7 +31,9 @@ public class OrderServiceController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderServiceModel create(@Valid @RequestBody OrderService orderService) {
+    public OrderServiceModel create(@Valid @RequestBody OrderServiceInput orderServiceInput) {
+        OrderService orderService = toEntity(orderServiceInput);
+
         return toModel(managerOrderService.create(orderService));
     }
 
@@ -50,6 +53,12 @@ public class OrderServiceController {
         return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/{orderServiceId}/finish")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finish(@PathVariable Long orderServiceId) {
+        managerOrderService.finishOrder(orderServiceId);
+    }
+
     private OrderServiceModel toModel(OrderService orderService) {
         return modelMapper.map(orderService, OrderServiceModel.class);
     }
@@ -58,5 +67,9 @@ public class OrderServiceController {
         return ordersService.stream()
                 .map(orderService -> toModel(orderService))
                 .collect(Collectors.toList());
+    }
+
+    private OrderService toEntity(OrderServiceInput orderServiceInput) {
+        return modelMapper.map(orderServiceInput, OrderService.class);
     }
 }
