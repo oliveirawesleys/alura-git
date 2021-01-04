@@ -13,7 +13,7 @@ public class Conta {
 	private Integer agencia;
 	private Integer numero;
 	private Double saldo;
-	@OneToMany(mappedBy = "conta")
+	@OneToMany(mappedBy = "conta", fetch = FetchType.EAGER)
 	private List<Movimentacao> movimentacoes;
 
 	public void setSaldo(Double saldo) {
