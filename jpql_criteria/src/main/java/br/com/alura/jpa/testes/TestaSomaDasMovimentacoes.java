@@ -1,5 +1,7 @@
 package br.com.alura.jpa.testes;
 
+import br.com.alura.jpa.dao.MovimentacaoDao;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -12,11 +14,8 @@ public class TestaSomaDasMovimentacoes {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("alura");
         EntityManager em = emf.createEntityManager();
 
-        String jpql = "select  avg(m.valor) from Movimentacao m";
+        MovimentacaoDao dao = new MovimentacaoDao(em);
 
-        TypedQuery<Double> query = em.createQuery(jpql, Double.class);
-        Double mediaDasMovimentacoes = query.getSingleResult();
-
-        System.out.println("A média das movimentações é: " + mediaDasMovimentacoes);
+        System.out.println("A soma das movimentações é: " + dao.somaDasMovimentacoes());
     }
 }

@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+@NamedQuery(name = "mediaDiariaMovimentacoes",
+		query = "select  new br.com.alura.jpa.modelo.MediaComData(avg(m.valor), day(m.data), month(m.data)) from Movimentacao m group by day(m.data), month(m.data), year(m.data)")
+
 @Entity
 public class Movimentacao {
 	@Id
