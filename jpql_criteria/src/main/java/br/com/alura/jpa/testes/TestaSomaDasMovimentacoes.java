@@ -1,11 +1,16 @@
 package br.com.alura.jpa.testes;
 
 import br.com.alura.jpa.dao.MovimentacaoDao;
+import br.com.alura.jpa.modelo.Movimentacao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 
 public class TestaSomaDasMovimentacoes {
@@ -14,8 +19,16 @@ public class TestaSomaDasMovimentacoes {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("alura");
         EntityManager em = emf.createEntityManager();
 
-        MovimentacaoDao dao = new MovimentacaoDao(em);
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<BigDecimal> query = builder.createQuery(BigDecimal.class);
 
-        System.out.println("A soma das movimentações é: " + dao.somaDasMovimentacoes());
+        Root<Movimentacao> root = query.from(Movimentacao.class);
+
+        Expression<BigDecimal> soma = builder.sum(root.<BigDecimal>get("valor"));
+        query.select(soma);
+
+        TypedQuery<BigDecimal> typedQuery = em.createQuery(query);
+
+        System.out.println("A soma das movimentações é: " + typedQuery.getSingleResult());
     }
 }
