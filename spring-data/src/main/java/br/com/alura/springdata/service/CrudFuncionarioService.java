@@ -4,7 +4,7 @@ import br.com.alura.springdata.orm.Cargo;
 import br.com.alura.springdata.orm.Funcionario;
 import br.com.alura.springdata.orm.UnidadeTrabalho;
 import br.com.alura.springdata.repository.CargoRepository;
-import br.com.alura.springdata.repository.FuncionarioReposiroty;
+import br.com.alura.springdata.repository.FuncionarioRepository;
 import br.com.alura.springdata.repository.UnidadeTrabalhoRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +23,10 @@ public class CrudFuncionarioService {
 
 
     private final CargoRepository cargoRepository;
-    private final FuncionarioReposiroty funcionarioRepository;
+    private final FuncionarioRepository funcionarioRepository;
     private final UnidadeTrabalhoRepository unidadeTrabalhoRepository;
 
-    public CrudFuncionarioService(CargoRepository cargoRepository, FuncionarioReposiroty funcionarioRepository,
+    public CrudFuncionarioService(CargoRepository cargoRepository, FuncionarioRepository funcionarioRepository,
                                   UnidadeTrabalhoRepository unidadeTrabalhoRepository) {
         this.cargoRepository = cargoRepository;
         this.funcionarioRepository = funcionarioRepository;

@@ -7,7 +7,6 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -35,4 +34,17 @@ public class Funcionario {
             joinColumns = {@JoinColumn(name = "fk_funcionario") },
             inverseJoinColumns = { @JoinColumn(name = "fk_unidade") })
     private List<UnidadeTrabalho> unidadeTrabalhos;
+
+    @Override
+    public String toString() {
+        return "Funcionario{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", salario=" + salario +
+                ", dataContratacao=" + dataContratacao +
+                ", cargo=" + cargo +
+                ", unidadeTrabalhos=" + unidadeTrabalhos +
+                '}';
+    }
 }
