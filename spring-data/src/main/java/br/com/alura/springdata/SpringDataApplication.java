@@ -18,10 +18,12 @@ public class SpringDataApplication implements CommandLineRunner {
 	private Boolean system = true;
 	private final CrudCargoService cargoService;
 	private final RelatoriosService relatoriosService;
+	private final CrudFuncionarioService funcionarioService;
 
-	public SpringDataApplication(CrudCargoService cargoService, RelatoriosService relatoriosService) {
+	public SpringDataApplication(CrudCargoService cargoService, RelatoriosService relatoriosService, CrudFuncionarioService funcionarioService) {
 		this.cargoService = cargoService;
 		this.relatoriosService = relatoriosService;
+		this.funcionarioService = funcionarioService;
 	}
 
 	public static void main(String[] args) {
@@ -35,16 +37,20 @@ public class SpringDataApplication implements CommandLineRunner {
 		while (system) {
 			System.out.println("Qual ação gostaria de executar?");
 			System.out.println("0 - Sair");
-			System.out.println("1 - Cargo");
-			System.out.println("2 - Relatorios");
+			System.out.println("1 - Funcionario");
+			System.out.println("2 - Cargo");
+			System.out.println("3 - Relatorios");
 
 			int action = scanner.nextInt();
 
 			switch (action) {
 				case 1:
-					cargoService.inicial(scanner);
+					funcionarioService.inicial(scanner);
 					break;
 				case 2:
+					cargoService.inicial(scanner);
+					break;
+				case 3:
 					relatoriosService.inicial(scanner);
 					break;
 				default:
