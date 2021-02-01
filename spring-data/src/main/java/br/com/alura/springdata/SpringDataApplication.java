@@ -4,6 +4,7 @@ import br.com.alura.springdata.orm.Cargo;
 import br.com.alura.springdata.repository.CargoRepository;
 import br.com.alura.springdata.service.CrudCargoService;
 import br.com.alura.springdata.service.CrudFuncionarioService;
+import br.com.alura.springdata.service.RelatorioFuncionarioDinamico;
 import br.com.alura.springdata.service.RelatoriosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,11 +20,14 @@ public class SpringDataApplication implements CommandLineRunner {
 	private final CrudCargoService cargoService;
 	private final RelatoriosService relatoriosService;
 	private final CrudFuncionarioService funcionarioService;
+	private final RelatorioFuncionarioDinamico relatorioFuncionarioDinamico;
 
-	public SpringDataApplication(CrudCargoService cargoService, RelatoriosService relatoriosService, CrudFuncionarioService funcionarioService) {
+	public SpringDataApplication(CrudCargoService cargoService, RelatoriosService relatoriosService,
+								 CrudFuncionarioService funcionarioService, RelatorioFuncionarioDinamico relatorioFuncionarioDinamico) {
 		this.cargoService = cargoService;
 		this.relatoriosService = relatoriosService;
 		this.funcionarioService = funcionarioService;
+		this.relatorioFuncionarioDinamico = relatorioFuncionarioDinamico;
 	}
 
 	public static void main(String[] args) {
@@ -40,6 +44,7 @@ public class SpringDataApplication implements CommandLineRunner {
 			System.out.println("1 - Funcionario");
 			System.out.println("2 - Cargo");
 			System.out.println("3 - Relatorios");
+			System.out.println("4 - Relatorios Dinamico");
 
 			int action = scanner.nextInt();
 
@@ -52,6 +57,9 @@ public class SpringDataApplication implements CommandLineRunner {
 					break;
 				case 3:
 					relatoriosService.inicial(scanner);
+					break;
+				case 4:
+					relatorioFuncionarioDinamico.inicial(scanner);
 					break;
 				default:
 					break;

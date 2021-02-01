@@ -2,6 +2,8 @@ package br.com.alura.springdata.repository;
 
 import br.com.alura.springdata.orm.Funcionario;
 import br.com.alura.springdata.orm.FuncionarioProjecao;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -11,7 +13,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface FuncionarioRepository extends PagingAndSortingRepository<Funcionario, Integer> {
+public interface FuncionarioRepository extends PagingAndSortingRepository<Funcionario, Integer>,
+        JpaSpecificationExecutor<Funcionario> {
 
     List<Funcionario> findByNome(String nome);
 
