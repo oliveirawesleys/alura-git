@@ -17,11 +17,20 @@ public class OrdenaStrings {
         palavras.add("onibus");
         palavras.add("aeronave");
 
-        Comparator<String> comparador = new ComparadorPorTamanho();
 
         //Collections.sort(palavras, comparador);
         //Mesma coisa:
-        palavras.sort(comparador);
+
+        /*
+        palavras.sort((s1, s2) -> {
+                if (s1.length() < s2.length())
+                    return -1;
+                if (s1.length() > s2.length())
+                    return 1;
+                return 0;
+        });*/
+
+        palavras.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
 
         System.out.println(palavras);
 
@@ -29,9 +38,12 @@ public class OrdenaStrings {
         for (String p : palavras) {
             System.out.println(p);
         }*/
+
+        Consumer<String> impressor = s -> System.out.println(s);
+        palavras.forEach(impressor);
+
         //Mesma coisa:
-        Consumer<String> consumidor = new ImprimeNaLinha();
-        palavras.forEach(consumidor);
+        palavras.forEach(s -> System.out.println(s));
     }
 }
 
