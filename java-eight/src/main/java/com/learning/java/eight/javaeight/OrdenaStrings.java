@@ -30,7 +30,9 @@ public class OrdenaStrings {
                 return 0;
         });*/
 
-        palavras.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
+        //palavras.sort((s1, s2) -> Integer.compare(s1.length(), s2.length()));
+
+        palavras.sort(Comparator.comparing(String::length));
 
         System.out.println(palavras);
 
@@ -43,7 +45,7 @@ public class OrdenaStrings {
         palavras.forEach(impressor);
 
         //Mesma coisa:
-        palavras.forEach(s -> System.out.println(s));
+        palavras.forEach(System.out::println);
     }
 }
 
