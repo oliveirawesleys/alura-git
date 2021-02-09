@@ -1,8 +1,7 @@
 package com.learning.java.eight.javaeight;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Curso {
@@ -34,21 +33,53 @@ class ExemploAlunos {
 
         cursos.sort(Comparator.comparing(Curso::getAlunos));
 
+
+
+
+
         //cursos.forEach(c -> System.out.println(c.getNome()));
 
         Stream<String> nomes = cursos.stream().map(Curso::getNome);
 
-        int sum = cursos.stream()
+        OptionalDouble media = cursos.stream()
                 .filter(c -> c.getAlunos() > 50)
                 .mapToInt(Curso::getAlunos)
-                .sum();
+                .average();
 
-        System.out.println("A soma é: " + sum);
-
-        cursos.stream()
+/*        cursos.stream()
                 .filter(c -> c.getAlunos() > 110)
                 .map(Curso::getNome)
-                .forEach(System.out::println);
+                .forEach(System.out::println);*/
         //.forEach(System.out::println);
+
+        //Assim podemos trabalhar em paralelo, para casos de grandes processamentos
+        //cursos.parallelStream()
+        /*cursos.stream()
+                .filter(c -> c.getAlunos() > 100)
+                .collect(Collectors.toMap(
+                        c -> c.getNome(),
+                        c -> c.getAlunos()))
+                .forEach((nome, alunos) -> System.out.println(nome + " tem " + alunos + " alunos."));*/
+
+        OptionalDouble qtdMedia = cursos.stream()
+                .mapToInt(c -> c.getAlunos())
+                .average();
+
+        System.out.println("A quantidade média é: " + qtdMedia.getAsDouble());
+
+        List<Curso> listaCursos = cursos.stream()
+                .filter(curso -> curso.getAlunos() > 50)
+                .collect(Collectors.toList());
+
+        System.out.println(listaCursos.get(0).getNome());
+
+
+        cursos.stream()
+                .filter(curso -> curso.getAlunos() > 50)
+                .collect(Collectors.toMap(
+                        c -> c.getNome(),
+                        c -> c.getAlunos()))
+                .forEach((nome, aluno) -> System.out.println(nome + " " + aluno));
+
     }
 }
