@@ -1,8 +1,8 @@
 package com.testes.automatizados.testesautomatizados;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class LeilaoTeste {
 
@@ -68,5 +68,28 @@ public class LeilaoTeste {
         assertEquals(10, leilao.getLances().size());
         assertEquals(1000, leilao.getLances().get(leilao.getLances().size()-1).getValor(), 0.0001);
 
+    }
+
+    @Test
+    public void deveCriarUmNovoLanceComODobroDoLanceAnterior() {
+        Leilao leilao = new Leilao("Chinelo");
+        Usuario tereza = new Usuario("Tereza");
+        Usuario toni = new Usuario("Toni");
+
+        leilao.propoe(new Lance(toni, 100));
+        leilao.propoe(new Lance(tereza, 30));
+        leilao.dobraLance(toni);
+
+        assertEquals(200, leilao.getLances().get(2).getValor(), 0.00001);
+    }
+
+    @Test
+    public void naoDeveDobrarCasoNaoHajaLancesAnteriores() {
+        Leilao leilao = new Leilao("Mesa");
+        Usuario jose = new Usuario("Jose");
+
+        leilao.dobraLance(jose);
+
+        assertEquals(0, leilao.getLances().size());
     }
 }
