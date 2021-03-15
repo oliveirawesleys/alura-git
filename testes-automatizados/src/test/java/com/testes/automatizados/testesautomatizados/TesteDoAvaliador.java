@@ -1,8 +1,6 @@
 package com.testes.automatizados.testesautomatizados;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
 
@@ -17,22 +15,38 @@ public class TesteDoAvaliador {
     private Usuario pedro;
 
     @Before
-    public void criaAvaliador() {
+    public void setUp() {
         this.leiloeiro = new Avaliador();
         this.paulo = new Usuario("Paulo");
         this.joao = new Usuario("Joao");
         this.pedro = new Usuario("Pedro");
     }
 
+    @After
+    public void finaliza() {
+        System.out.println("Fim!");
+    }
+
+    @BeforeClass // são executados apenas uma vez, antes de todos os métodos de teste
+    public static void testandoBeforeClass() {
+        System.out.println("before class");
+    }
+
+    @AfterClass //é executado uma vez, após a execução do último método de teste da classe.
+    public static void testandoAfterClass() {
+        System.out.println("after class");
+    }
+
     @Test
     public void deveEntenderLancesEmOrdemDescrescente() {
         //Parte 1: Cenario
 
-        Leilao leilao = new Leilao("Playstation 5");
+        Leilao leilao = new CriadorDeLeilao().para("Televisao")
+                .lance(paulo, 250)
+                .lance(joao, 300)
+                .lance(pedro, 400)
+                .constroi();
 
-        leilao.propoe(new Lance(paulo, 250));
-        leilao.propoe(new Lance(joao, 300));
-        leilao.propoe(new Lance(pedro, 400 ));
 
         //Parte 2: Acao
         leiloeiro.avalia(leilao);
@@ -50,11 +64,12 @@ public class TesteDoAvaliador {
     public void deveCalcularMedia() {
         //Parte 1: Cenario
 
-        Leilao leilao = new Leilao("Playstation 5");
+        Leilao leilao = new CriadorDeLeilao().para("Lanhca")
+                .lance(paulo, 300)
+                .lance(joao, 400)
+                .lance(pedro, 500)
+                .constroi();
 
-        leilao.propoe(new Lance(paulo, 300));
-        leilao.propoe(new Lance(joao, 400));
-        leilao.propoe(new Lance(pedro, 500 ));
 
         //Parte 2: Acao
         leiloeiro.avalia(leilao);
@@ -80,12 +95,12 @@ public class TesteDoAvaliador {
     @Test
     public void deveEncontrarOsTresMaioresLances() {
 
-        Leilao leilao = new Leilao("Playstation");
-
-        leilao.propoe(new Lance(joao, 100));
-        leilao.propoe(new Lance(pedro, 200));
-        leilao.propoe(new Lance(joao, 400));
-        leilao.propoe(new Lance(pedro, 700));
+        Leilao leilao = new CriadorDeLeilao().para("Notebook")
+                .lance(joao, 100)
+                .lance(pedro, 200)
+                .lance(joao, 400)
+                .lance(pedro, 700)
+                .constroi();
 
         leiloeiro.avalia(leilao);
 
@@ -100,7 +115,6 @@ public class TesteDoAvaliador {
     @Test
     public void deveFuncionarComApenasUmLance() {
         Leilao leilao = new Leilao("Playstation");
-
         leilao.propoe(new Lance(pedro, 100));
 
         leiloeiro.avalia(leilao);
@@ -111,11 +125,12 @@ public class TesteDoAvaliador {
 
     @Test
     public void deveEntenderLancesEmOrdemAleatoria() {
-        Leilao leilao = new Leilao("Playstation");
+        Leilao leilao = new CriadorDeLeilao().para("Playstation")
+                .lance(paulo, 900)
+                .lance(joao, 850)
+                .lance(pedro, 200)
+                .constroi();
 
-        leilao.propoe(new Lance(paulo, 900));
-        leilao.propoe(new Lance(joao, 850));
-        leilao.propoe(new Lance(pedro, 200));
 
         leiloeiro.avalia(leilao);
 
@@ -145,9 +160,10 @@ public class TesteDoAvaliador {
     @Test
     public void deveDevolverTodosLancesCasoHajaNoMinimo3() {
 
-        Leilao leilao = new Leilao("TV");
-        leilao.propoe(new Lance(joao, 3000));
-        leilao.propoe(new Lance(paulo, 5000));
+        Leilao leilao = new CriadorDeLeilao().para("Mesa")
+                .lance(joao, 3000)
+                .lance(paulo, 5000)
+                .constroi();
 
         leiloeiro.avalia(leilao);
 
