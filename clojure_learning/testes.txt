@@ -1,0 +1,37 @@
+(defn valor-descontado
+  "Retorna o valor com desconto de 10%."
+  [valor-bruto]
+  (def desconto 0.10)
+  (* valor-bruto (- 1 desconto)))
+
+
+(defn valor-descontado
+  "Retorna o valor com desconto de 10%."
+  [valor-bruto]
+  let [desconto 0.10])
+  (* valor-bruto (- 1 desconto)))
+
+(defn valor-descontado
+  "Retorna o valor com desconro de 10%."
+  [valor-bruto]
+  (let [taxa-de-desconto (/ 10 100)
+        desconto         (* valor-bruto taxa-de-desconto)]
+    (- valor-bruto desconto)))
+
+
+(if (> 33 26)
+  (println "Gua é mais velha")
+  (println "Wes é mais novo"))
+
+Exemplo com IF/ELSE
+
+(defn valor-descontado
+  "Retorna o valor com desconto de 10% se o valor bruto for maior que 100."
+  [valor-bruto]
+  (if (> valor-bruto 100)
+    (let [taxa-de-desconto (/ 10 100)
+          desconto          (* valor-bruto taxa-de-desconto)]
+   (println "Calculando desconto de" desconto)
+   (- valor-bruto desconto))
+  valor-bruto))
+
