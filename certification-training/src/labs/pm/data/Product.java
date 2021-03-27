@@ -1,11 +1,13 @@
 package labs.pm.data;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Objects;
 
 import static java.math.RoundingMode.HALF_UP;
-import static labs.pm.data.Rating.*;
+import static labs.pm.data.Rating.NOT_RATED;
 
-public class Product {
+public abstract class Product {
 
     /**
      * A constant that defines a {@link java.math.BigDecimal}
@@ -19,18 +21,20 @@ public class Product {
     private BigDecimal price;
     private Rating rating;
 
-    public Product() {
+/*
+    Product() {
         this(000, "No name", BigDecimal.ZERO);
     }
+*/
 
-    public Product(int id, String name, BigDecimal price, Rating rating) {
+    Product(int id, String name, BigDecimal price, Rating rating) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.rating = rating;
     }
 
-    public Product(int id, String name, BigDecimal price) {
+    Product(int id, String name, BigDecimal price) {
         this(id, name, price, NOT_RATED);
     }
 
@@ -66,7 +70,34 @@ public class Product {
         return rating;
     }
 
-    public Product applyRating(Rating newRating) {
+    public abstract Product applyRating(Rating newRating);
+/*    {
         return new Product(id, name, price, newRating);
+    }*/
+
+    public LocalDate getBestBefore() {
+        return LocalDate.now();
+    }
+
+
+    @Override
+    public String toString() {
+        return id + ", " +  name  + ", " + price + ", " + getDiscount() + ", " + rating.getStars() + ", " + getBestBefore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        //if (o != null && getClass() == o.getClass()) {
+        if (o instanceof Product) {
+            final Product other = (Product) o;
+            return this.id == other.id && Objects.equals(this.name, other.name);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
