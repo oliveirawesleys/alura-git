@@ -7,7 +7,7 @@ import java.util.Objects;
 import static java.math.RoundingMode.HALF_UP;
 import static labs.pm.data.Rating.NOT_RATED;
 
-public abstract class Product {
+public abstract class Product implements Rateable<Product> {
 
     /**
      * A constant that defines a {@link java.math.BigDecimal}
@@ -66,11 +66,12 @@ public abstract class Product {
         return price.multiply(DISCOUNT_RATE).setScale(2, HALF_UP);
     }
 
+    @Override
     public Rating getRating() {
         return rating;
     }
 
-    public abstract Product applyRating(Rating newRating);
+    /*public abstract Product applyRating(Rating newRating);*/
 /*    {
         return new Product(id, name, price, newRating);
     }*/
