@@ -13,20 +13,30 @@ public class Shop {
 
     public static void main(String[] args) {
 
-        ProductManager pm = new ProductManager(Locale.UK);
-        Product p1 = pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
-        pm.printProductReport(101);
+        ProductManager pm = new ProductManager("en-GB");
+        pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
+//        pm.printProductReport(101);
         pm.reviewProduct(101, FOUR_STAR, "Nice hot cup of tea.");
-        pm.reviewProduct(101, ONE_STAR, "Rather weak tea.");
+        pm.reviewProduct(101, FIVE_STAR, "Rather weak tea.");
         pm.reviewProduct(101, TWO_STAR, "Just add some lemon.");
         pm.reviewProduct(101, FIVE_STAR, "Perfect tea.");
-        pm.printProductReport(101);
+//        pm.printProductReport(101);
 
-        Product p2 = pm.createProduct(102, "Coffee", BigDecimal.valueOf(1.99), NOT_RATED);
+        pm.changeLocale("fr-FR");
+
+        pm.createProduct(102, "Coffee", BigDecimal.valueOf(2.99), NOT_RATED);
         pm.reviewProduct(102, THREE_STAR, "Coffee was ok");
         pm.reviewProduct(102, ONE_STAR, "Where is the milk?!");
         pm.reviewProduct(102, FIVE_STAR, "It's perfect with ten spoons of sugar!");
-        pm.printProductReport(102);
+//        pm.printProductReport(102);
+
+        Comparator<Product> ratingSorter = (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal();
+
+        Comparator<Product> priceSorter = (p1, p2) -> p2.getPrice().compareTo(p1.getPrice());
+        pm.printProducts(ratingSorter.thenComparing(priceSorter));
+        pm.printProducts(ratingSorter.thenComparing(priceSorter).reversed());
+//        pm.printProducts(priceSorter);
+//        pm.printProducts(ratingSorter);
 
 
  /*       Product p2 = pm.createProduct(102, "Coffee", BigDecimal.valueOf(1.99), FOUR_STAR);
