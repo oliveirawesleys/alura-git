@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ProductManager {
@@ -19,6 +21,8 @@ public class ProductManager {
                                                                     "fr-FR", new ResourceFormatter(Locale.FRANCE),
                                                                     "zu-RU", new ResourceFormatter(new Locale("ru", "RU")),
                                                                     "zh-CN", new ResourceFormatter(Locale.CHINA));
+    private static final Logger logger = Logger.getLogger(ProductManager.class.getName());
+
 /*    private Product product;
     private Review [] reviews = new Review[5];*/
 
@@ -51,7 +55,12 @@ public class ProductManager {
     }
 
     public Product reviewProduct(int id, Rating rating, String comments) {
-        return reviewProduct(findProduct(id), rating, comments);
+        try {
+            return reviewProduct(findProduct(id), rating, comments);
+        } catch (ProductManagerException ex) {
+            logger.log(Level.INFO, ex.getMessage());
+        }
+        return null;
     }
 
     public Product reviewProduct(Product product, Rating rating, String comments) {
@@ -70,16 +79,22 @@ public class ProductManager {
         return product;
     }
 
-    public Product findProduct(int id) {
+    public Product findProduct(int id) throws ProductManagerException {
         return products.keySet()
                 .stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
-                .orElseGet(() -> null);
+                .orElseThrow(() -> new ProductManagerException("Product with id " + id + " not found."));
+                //.get();
+                // .orElseGet(() -> null);
     }
 
     public void printProductReport(int id) {
-        printProductReport(findProduct(id));
+        try {
+            printProductReport(findProduct(id));
+        } catch (ProductManagerException ex) {
+            logger.log(Level.INFO, ex.getMessage());
+        }
     }
 
     public void printProductReport(Product product) {

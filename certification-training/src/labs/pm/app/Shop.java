@@ -13,9 +13,19 @@ public class Shop {
 
     public static void main(String[] args) {
 
+
+/*        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 6, 12);
+
+// retornar a soma de todos os números da lista
+        int result = numbers
+                .stream()
+                .reduce(0, (subtotal, element) -> subtotal + element);
+
+        System.out.println(result);*/
+
         ProductManager pm = new ProductManager("en-GB");
         pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
-//        pm.printProductReport(101);
+        pm.printProductReport(42);
         pm.reviewProduct(101, FOUR_STAR, "Nice hot cup of tea.");
         pm.reviewProduct(101, FIVE_STAR, "Rather weak tea.");
         pm.reviewProduct(101, TWO_STAR, "Just add some lemon.");
