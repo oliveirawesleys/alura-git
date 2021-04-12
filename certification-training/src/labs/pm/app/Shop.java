@@ -24,28 +24,41 @@ public class Shop {
         System.out.println(result);*/
 
         ProductManager pm = new ProductManager("en-GB");
-        pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
-        pm.printProductReport(42);
-        pm.reviewProduct(101, FOUR_STAR, "Nice hot cup of tea.");
+
+        //pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
+        pm.parseProduct("D,101,Tea,1.99,0,2020-09-19");
+        pm.printProductReport(101);
+        //pm.reviewProduct(101, FOUR_STAR, "Nice hot cup.");
+/*        pm.reviewProduct(101, FOUR_STAR, "Nice hot cup of tea.");
         pm.reviewProduct(101, FIVE_STAR, "Rather weak tea.");
         pm.reviewProduct(101, TWO_STAR, "Just add some lemon.");
-        pm.reviewProduct(101, FIVE_STAR, "Perfect tea.");
+        pm.reviewProduct(101, FIVE_STAR, "Perfect tea.");*/
 //        pm.printProductReport(101);
+        pm.parseReview("101,4,Nice hot cup");
+        pm.parseReview("101,4,Fine tea");
+        pm.parseReview("101,2,Rather weak tea");
+        pm.parseReview("101,4,Just add some lemon");
+        pm.parseReview("101,5,Perfect tea");
+        pm.printProductReport(101);
 
-        pm.changeLocale("fr-FR");
+        pm.parseProduct("F,103,Cake,3.99,0,2020-09-19");
+        pm.printProductReport(103);
 
-        pm.createProduct(102, "Coffee", BigDecimal.valueOf(2.99), NOT_RATED);
+
+        //pm.changeLocale("fr-FR");
+
+/*        pm.createProduct(102, "Coffee", BigDecimal.valueOf(2.99), NOT_RATED);
         pm.reviewProduct(102, THREE_STAR, "Coffee was ok");
         pm.reviewProduct(102, ONE_STAR, "Where is the milk?!");
-        pm.reviewProduct(102, FIVE_STAR, "It's perfect with ten spoons of sugar!");
+        pm.reviewProduct(102, FIVE_STAR, "It's perfect with ten spoons of sugar!");*/
 //        pm.printProductReport(102);
 
-        Comparator<Product> ratingSorter = (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal();
+/*        Comparator<Product> ratingSorter = (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal();
 
         Comparator<Product> priceSorter = (p1, p2) -> p2.getPrice().compareTo(p1.getPrice());
         pm.printProducts(p -> p.getPrice().floatValue() < 2, ratingSorter.thenComparing(priceSorter));
 
-        pm.getDiscounts().forEach((rating, discount) -> System.out.println(rating + "\t" + discount));
+        pm.getDiscounts().forEach((rating, discount) -> System.out.println(rating + "\t" + discount));*/
         //pm.printProducts(ratingSorter.thenComparing(priceSorter).reversed());
 //        pm.printProducts(priceSorter);
 //        pm.printProducts(ratingSorter);
