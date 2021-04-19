@@ -25,24 +25,38 @@ public class Shop {
 
         ProductManager pm = new ProductManager("en-GB");
 
-        //pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
-        pm.parseProduct("D,101,Tea,1.99,0,2020-09-19");
+        //pm.printProductReport(101);
+
+        pm.createProduct(164, "Kombucha", BigDecimal.valueOf(4.99), NOT_RATED);
+        pm.reviewProduct(164, TWO_STAR, "Look like Tea, but is it?");
+        pm.reviewProduct(164, FIVE_STAR, "Perfect!");
+        //pm.printProductReport(164);
+        //pm.dumpData();
+        //pm.restoreData();
         pm.printProductReport(101);
+        pm.printProductReport(164);
+        pm.printProducts(p -> p.getPrice().floatValue() < 2, (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
+
+        pm.getDiscounts().forEach((rating, discount) -> System.out.println(rating + "\t" + discount));
+
+        //pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
+        //pm.parseProduct("D,101,Tea,1.99,0,2020-09-19");
+
         //pm.reviewProduct(101, FOUR_STAR, "Nice hot cup.");
 /*        pm.reviewProduct(101, FOUR_STAR, "Nice hot cup of tea.");
         pm.reviewProduct(101, FIVE_STAR, "Rather weak tea.");
         pm.reviewProduct(101, TWO_STAR, "Just add some lemon.");
         pm.reviewProduct(101, FIVE_STAR, "Perfect tea.");*/
 //        pm.printProductReport(101);
-        pm.parseReview("101,4,Nice hot cup");
+/*        pm.parseReview("101,4,Nice hot cup");
         pm.parseReview("101,4,Fine tea");
         pm.parseReview("101,2,Rather weak tea");
         pm.parseReview("101,4,Just add some lemon");
-        pm.parseReview("101,5,Perfect tea");
-        pm.printProductReport(101);
+        pm.parseReview("101,5,Perfect tea");*/
+        //pm.printProductReport(101);
 
-        pm.parseProduct("F,103,Cake,3.99,0,2020-09-19");
-        pm.printProductReport(103);
+        //pm.parseProduct("F,103,Cake,3.99,0,2020-09-19");
+        //pm.printProductReport(103);
 
 
         //pm.changeLocale("fr-FR");

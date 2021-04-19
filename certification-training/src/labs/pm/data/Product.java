@@ -1,5 +1,6 @@
 package labs.pm.data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -7,7 +8,7 @@ import java.util.Objects;
 import static java.math.RoundingMode.HALF_UP;
 import static labs.pm.data.Rating.NOT_RATED;
 
-public abstract class Product implements Rateable<Product> {
+public abstract class Product implements Rateable<Product>, Serializable {
 
     /**
      * A constant that defines a {@link java.math.BigDecimal}
