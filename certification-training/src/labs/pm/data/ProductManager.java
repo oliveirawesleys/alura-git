@@ -2,6 +2,7 @@ package labs.pm.data;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -138,15 +139,7 @@ public class ProductManager {
         productList.sort(sorter);*/
 
         StringBuilder txt = new StringBuilder();
-        products.keySet()
-                .stream()
-                .sorted(sorter)
-                .filter(filter)
-                .forEach(p -> txt.append(formatter.formatProduct(p) + "\n"));
-/*        for (Product product : productList) {
-            txt.append(formatter.formatProduct(product));
-            txt.append("\n");
-        }*/
+        products.keySet().stream().sorted(sorter).filter(filter).forEach(p -> txt.append(formatter.formatProduct(p) + "\n"));
         System.out.println(txt);
     }
 
@@ -155,17 +148,19 @@ public class ProductManager {
             if (Files.notExists(tempFolder)) {
                 Files.createDirectories(tempFolder);
             }
+            URL url = getClass().getResource("temp.file");
             Path tempFile = tempFolder.resolve(MessageFormat.format(config.getString("temp.file"), Instant.now()));
             try (ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(tempFile, StandardOpenOption.CREATE))) {
                 out.writeObject(products);
                 products = new HashMap<>();
             }
+
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "Error dumping data " + ex.getMessage());
         }
     }
 
-    @SuppressWarnings("unckecked")
+    //@SuppressWarnings("unckecked")
     public void restoreData() {
         try {
             Path tempFile = Files.list(tempFolder)

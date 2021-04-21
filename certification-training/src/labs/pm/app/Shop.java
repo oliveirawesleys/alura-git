@@ -31,9 +31,10 @@ public class Shop {
         pm.reviewProduct(164, TWO_STAR, "Look like Tea, but is it?");
         pm.reviewProduct(164, FIVE_STAR, "Perfect!");
         //pm.printProductReport(164);
-        //pm.dumpData();
-        //pm.restoreData();
+        pm.dumpData();
+        pm.restoreData();
         pm.printProductReport(101);
+        pm.printProductReport(103);
         pm.printProductReport(164);
         pm.printProducts(p -> p.getPrice().floatValue() < 2, (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
 
