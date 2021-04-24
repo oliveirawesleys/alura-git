@@ -2,7 +2,6 @@ package labs.pm.data;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -146,10 +145,13 @@ public class ProductManager {
     public void dumpData() {
         try {
             if (Files.notExists(tempFolder)) {
-                Files.createDirectories(tempFolder);
+                Files.createDirectory(tempFolder);
             }
-            URL url = getClass().getResource("temp.file");
-            Path tempFile = tempFolder.resolve(MessageFormat.format(config.getString("temp.file"), Instant.now()));
+
+            String fileComplete = MessageFormat.format(config.getString("temp.file"), Instant.now());
+            String manipuledFile = fileComplete.replace(":", "_");
+            Path tempFile = tempFolder.resolve(manipuledFile);
+            //Path tempFile = tempFolder.resolve(MessageFormat.format(config.getString("temp.file"), Instant.now()));
             try (ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(tempFile, StandardOpenOption.CREATE))) {
                 out.writeObject(products);
                 products = new HashMap<>();
