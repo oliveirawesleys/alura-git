@@ -6,10 +6,10 @@ public class ExerciceRunnable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("Executando Runnable");
+                System.out.println("Executando Runnable.");
             }
         }).start();
 
-        new Thread(() -> System.out.println("Executando Runnable com Lambda")).start();
+        new Thread(() -> System.out.println("Executando Runnable com Lambda.")).start();
     }
 }
