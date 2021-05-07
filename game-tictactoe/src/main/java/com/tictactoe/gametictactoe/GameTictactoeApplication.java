@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GameTictactoeApplication {
 
 	public static void main(String[] args) {
+		new TicTacToe();
 		SpringApplication.run(GameTictactoeApplication.class, args);
 	}
 
