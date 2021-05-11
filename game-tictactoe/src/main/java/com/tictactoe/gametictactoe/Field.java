@@ -1,9 +1,8 @@
+/*
 package com.tictactoe.gametictactoe;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Field extends JButton {
     final int PLAYER_1 = 1;
@@ -23,3 +22,4 @@ public class Field extends JButton {
         });
     }
 }
+*/

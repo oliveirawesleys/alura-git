@@ -5,19 +5,23 @@ import java.awt.*;
 
 public class TicTacToe extends JFrame {
 
-    ImageIcon circle = new ImageIcon("circle.png");
-    ImageIcon x = new ImageIcon("x.png");
+    String p1 = JOptionPane.showInputDialog("Player 1: ");
+    String p2 = JOptionPane.showInputDialog("Player 2: ");
+
+    ImageIcon imgX = new ImageIcon ("pizza.png");
+    //ImageIcon imgCircleTest = new ImageIcon (getClass().getResource("bolinha.jpg"));
+    ImageIcon imgCircle = new ImageIcon ("donuts.png");
 
     JPanel pScreen = new JPanel(new GridLayout(3, 3, 5, 5));
 
     Field[] fields = new Field[9];
 
-    final int PLAYER_1 = 1;
-    final int PLAYER_2 = 2;
+    final String PLAYER_1 = p1;
+    final String PLAYER_2 = p2;
+    int turn = 0;
+    String playerActual = PLAYER_1;
 
-    int playerActual = PLAYER_1;
-
-    JLabel lInformation = new JLabel("Player " + PLAYER_1);
+    JLabel lInformation = new JLabel(PLAYER_1);
 
     public TicTacToe() {
         configureTicTacToe();
@@ -41,19 +45,40 @@ public class TicTacToe extends JFrame {
     }
 
     public void changePlayer() {
-        if (playerActual == 1) {
-            playerActual = 2;
-            lInformation.setText("Player 2");
+        if (playerActual == p1) {
+            playerActual = p2;
+            lInformation.setText(p2);
             lInformation.setForeground(Color.RED);
         } else {
-            playerActual = 1;
-            lInformation.setText("Player 2");
+            playerActual = p1;
+            lInformation.setText(p1);
             lInformation.setForeground(Color.GREEN);
         }
     }
 
-    public boolean hasVictory(int player) {
+    public boolean hasVictory(String player) {
         if (fields[0].who == player && fields[1].who == player && fields[2].who == player ) {
+            return true;
+        }
+        if (fields[3].who == player && fields[4].who == player && fields[5].who == player ) {
+            return true;
+        }
+        if (fields[6].who == player && fields[7].who == player && fields[8].who == player ) {
+            return true;
+        }
+        if (fields[0].who == player && fields[3].who == player && fields[6].who == player ) {
+            return true;
+        }
+        if (fields[1].who == player && fields[4].who == player && fields[7].who == player ) {
+            return true;
+        }
+        if (fields[2].who == player && fields[5].who == player && fields[8].who == player ) {
+            return true;
+        }
+        if (fields[0].who == player && fields[4].who == player && fields[8].who == player ) {
+            return true;
+        }
+        if (fields[2].who == player && fields[4].who == player && fields[6].who == player ) {
             return true;
         }
         return false;
@@ -62,24 +87,33 @@ public class TicTacToe extends JFrame {
     private void configureTicTacToe() {
         setTitle("Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600, 600);
+        setSize(900, 900);
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
     public class Field extends JButton {
-        int who = 0;
+        String who = "";
 
         public Field() {
             setBackground(Color.WHITE);
             addActionListener(e -> {
-                if (who == 0) {
+                if (who.equals("")) {
                     if (playerActual == PLAYER_1) {
-                        setIcon(circle);
-                        who = PLAYER_1;
+                        setIcon(imgCircle);
+                        who = p1;
                     } else {
-                        setIcon(x);
-                        who = PLAYER_2;
+                        setIcon(imgX);
+                        who = p2;
+                    }
+                    if (hasVictory(who)) {
+                        JOptionPane.showMessageDialog(null, "Player " + who + " win a PlayStation 5!");
+                        System.exit(0);
+                    }
+                    turn++;
+                    if (turn == 9) {
+                        JOptionPane.showMessageDialog(null, "Play again...");
+                        System.exit(0);
                     }
                     changePlayer();
                 }
