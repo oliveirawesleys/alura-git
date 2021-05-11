@@ -20,10 +20,10 @@ public class UserController {
         user1.setEmail("batman@begins.com");
 
         var user2 = new User();
-        user1.setId(2l);
-        user1.setName("Robin");
-        user1.setPhone("991 option 2");
-        user1.setEmail("callbatman@begins.com");
+        user2.setId(2l);
+        user2.setName("Robin");
+        user2.setPhone("991 option 2");
+        user2.setEmail("callbatman@begins.com");
 
         return Arrays.asList(user1, user2);
     }
