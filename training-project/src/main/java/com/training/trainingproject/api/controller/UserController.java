@@ -4,27 +4,19 @@ import com.training.trainingproject.domain.model.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 import java.util.List;
 
 @RestController
 public class UserController {
 
+    @PersistenceContext
+    private EntityManager manager;
+
     @GetMapping("/users")
     public List<User> list() {
-
-        var user1 = new User();
-        user1.setId(1l);
-        user1.setName("Batman");
-        user1.setPhone("991");
-        user1.setEmail("batman@begins.com");
-
-        var user2 = new User();
-        user2.setId(2l);
-        user2.setName("Robin");
-        user2.setPhone("991 option 2");
-        user2.setEmail("callbatman@begins.com");
-
-        return Arrays.asList(user1, user2);
+        return manager.createQuery("from User", User.class).getResultList();
     }
 }
