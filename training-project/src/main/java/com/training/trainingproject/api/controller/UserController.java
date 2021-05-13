@@ -3,6 +3,7 @@ package com.training.trainingproject.api.controller;
 import com.training.trainingproject.domain.model.User;
 import com.training.trainingproject.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,4 +43,21 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public User add(@RequestBody User newUser) {
+        return userRepository.save(newUser);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
+
+        if (!userRepository.existsById(userId)) {
+            ResponseEntity.notFound().build();
+        }
+        user.setId(userId);
+        user = userRepository.save(user);
+
+        return ResponseEntity.ok(user);
+    }
 }
