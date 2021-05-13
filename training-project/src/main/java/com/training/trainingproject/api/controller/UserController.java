@@ -60,4 +60,15 @@ public class UserController {
 
         return ResponseEntity.ok(user);
     }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        if (!userRepository.existsById(userId)) {
+            ResponseEntity.notFound().build();
+        }
+
+        userRepository.deleteById(userId);
+
+        return ResponseEntity.noContent().build();
+    }
 }
