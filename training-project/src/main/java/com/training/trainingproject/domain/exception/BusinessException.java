@@ -1,10 +1,10 @@
 package com.training.trainingproject.domain.exception;
 
-public class BussinesException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
     public static final long serialVersionUID = 1L;
 
-    public BussinesException(String message) {
+    public BusinessException(String message) {
         super(message);
     }
 }

@@ -1,6 +1,6 @@
 package com.training.trainingproject.domain.service;
 
-import com.training.trainingproject.domain.exception.BussinesException;
+import com.training.trainingproject.domain.exception.BusinessException;
 import com.training.trainingproject.domain.model.User;
 import com.training.trainingproject.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class FormUserService {
         User userExist = userRepository.findByEmail(user.getEmail());
 
         if (userExist != null && !userExist.equals(user)) {
-            throw new BussinesException("Já existe um cliente cadastrado com esse e-mail!");
+            throw new BusinessException("Já existe um cliente cadastrado com esse e-mail!");
         }
         return userRepository.save(user);
     }
