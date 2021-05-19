@@ -2,6 +2,7 @@ package com.training.trainingproject.api.controller;
 
 import com.training.trainingproject.domain.model.User;
 import com.training.trainingproject.domain.repository.UserRepository;
+import com.training.trainingproject.domain.service.FormUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FormUserService userService;
+
     @GetMapping
     public List<User> list() {
         return userRepository.findAll();
@@ -44,7 +48,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User add(@Valid @RequestBody User newUser) {
-        return userRepository.save(newUser);
+        return userService.saveUser(newUser);
     }
 
     @PutMapping("/{userId}")
@@ -54,7 +58,7 @@ public class UserController {
             ResponseEntity.notFound().build();
         }
         user.setId(userId);
-        user = userRepository.save(user);
+        user = userService.saveUser(user);
 
         return ResponseEntity.ok(user);
     }
@@ -65,7 +69,7 @@ public class UserController {
             ResponseEntity.notFound().build();
         }
 
-        userRepository.deleteById(userId);
+        userService.delete(userId);
         return ResponseEntity.noContent().build();
     }
 }
