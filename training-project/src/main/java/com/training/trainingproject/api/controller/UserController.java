@@ -2,14 +2,12 @@ package com.training.trainingproject.api.controller;
 
 import com.training.trainingproject.domain.model.User;
 import com.training.trainingproject.domain.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,12 +43,12 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User add(@RequestBody User newUser) {
+    public User add(@RequestBody @Valid User newUser) {
         return userRepository.save(newUser);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody @Valid User user) {
 
         if (!userRepository.existsById(userId)) {
             ResponseEntity.notFound().build();
@@ -68,7 +66,6 @@ public class UserController {
         }
 
         userRepository.deleteById(userId);
-
         return ResponseEntity.noContent().build();
     }
 }
