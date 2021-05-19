@@ -27,7 +27,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
             fields.add(new Problem.Field(name, message));
         }
-
+        
         var problem = new Problem();
         problem.setStatus(status.value());
         problem.setTitle("Um ou mais campos estão inválidos!");
