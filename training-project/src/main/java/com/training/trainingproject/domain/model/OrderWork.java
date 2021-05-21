@@ -22,7 +22,8 @@ public class OrderWork {
 
     @Enumerated(EnumType.STRING)
     private StatusOrderWork status;
-    private LocalDateTime startDate;
+    
+    private LocalDateTime openDate;
     private LocalDateTime endDate;
 
 }
