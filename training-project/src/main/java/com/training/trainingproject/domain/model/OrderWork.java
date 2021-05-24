@@ -12,6 +12,7 @@ import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Entity
 @Data
@@ -38,9 +39,9 @@ public class OrderWork {
     private StatusOrderWork status;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime openDate;
+    private OffsetDateTime openDate;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime endDate;
+    private OffsetDateTime endDate;
 
 }
