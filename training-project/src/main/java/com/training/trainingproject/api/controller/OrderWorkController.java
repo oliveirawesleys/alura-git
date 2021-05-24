@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/order-work")
 public class OrderWorkController {
@@ -15,7 +17,7 @@ public class OrderWorkController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderWork create(@RequestBody OrderWork orderWork) {
+    public OrderWork create(@Valid @RequestBody OrderWork orderWork) {
         return managementOrderWorkService.create(orderWork);
     }
 }
