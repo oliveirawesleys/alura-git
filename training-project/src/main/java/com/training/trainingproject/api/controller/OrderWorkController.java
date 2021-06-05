@@ -1,5 +1,6 @@
 package com.training.trainingproject.api.controller;
 
+import com.training.trainingproject.api.model.OrderWorkInput;
 import com.training.trainingproject.api.model.OrderWorkModel;
 import com.training.trainingproject.domain.model.OrderWork;
 import com.training.trainingproject.domain.repository.OrderWorkRepository;
@@ -28,12 +29,6 @@ public class OrderWorkController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public OrderWorkModel create(@Valid @RequestBody OrderWork orderWork) {
-        return toModel(managementOrderWorkService.create(orderWork));
-    }
-
     @GetMapping
     public List<OrderWorkModel> listAll() {
         return toCollectionModel(orderWorkRepository.findAll());
@@ -50,6 +45,13 @@ public class OrderWorkController {
         return ResponseEntity.notFound().build();
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderWorkModel create(@Valid @RequestBody OrderWorkInput orderWorkInput) {
+        OrderWork orderWork = toEntity(orderWorkInput);
+        return toModel(managementOrderWorkService.create(orderWork));
+    }
+
     private OrderWorkModel toModel(OrderWork orderWork) {
         return modelMapper.map(orderWork, OrderWorkModel.class);
     }
@@ -59,4 +61,7 @@ public class OrderWorkController {
                 .collect(Collectors.toList());
     }
 
+    private OrderWork toEntity(OrderWorkInput orderWorkInput) {
+        return modelMapper.map(orderWorkInput, OrderWork.class);
+    }
 }
