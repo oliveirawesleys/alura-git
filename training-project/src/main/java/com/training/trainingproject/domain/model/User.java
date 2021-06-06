@@ -1,6 +1,5 @@
 package com.training.trainingproject.domain.model;
 
-import com.training.trainingproject.domain.ValidationGroups;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -9,14 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
 @Entity
 public class User {
 
-    @NotNull(groups = ValidationGroups.UserId.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
