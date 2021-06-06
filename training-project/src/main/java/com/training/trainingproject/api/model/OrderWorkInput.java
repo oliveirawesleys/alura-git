@@ -20,6 +20,6 @@ public class OrderWorkInput {
 
     @Valid
     @NotNull
-    private UserIdInput id;
+    private UserIdInput user;
 
 }
