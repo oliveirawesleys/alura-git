@@ -11,6 +11,7 @@ import com.training.trainingproject.domain.repository.OrderWorkRepository;
 import com.training.trainingproject.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -37,9 +38,18 @@ public class ManagementOrderWorkService {
         return orderWorkRepository.save(orderWork);
     }
 
+    public void finalizar(Long orderWorkId) {
+        OrderWork orderWork = search(orderWorkId);
+
+        orderWork.finalizeOrder();
+        orderWorkRepository.save(orderWork);
+
+    }
+
+
+
     public Commentary addCommentary(Long orderWorkId, String description) {
-        OrderWork orderWork = orderWorkRepository.findById(orderWorkId)
-                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
+        OrderWork orderWork = search(orderWorkId);
 
         Commentary commentary = new Commentary();
         commentary.setDateSend(OffsetDateTime.now());
@@ -47,5 +57,10 @@ public class ManagementOrderWorkService {
         commentary.setOrderWork(orderWork);
 
         return commentaryRepository.save(commentary);
+    }
+
+    private OrderWork search(Long orderWorkId) {
+       return orderWorkRepository.findById(orderWorkId)
+                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada"));
     }
 }

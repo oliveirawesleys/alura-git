@@ -52,6 +52,12 @@ public class OrderWorkController {
         return toModel(managementOrderWorkService.create(orderWork));
     }
 
+    @PutMapping("/{orderWorkId}/finalizeOrder")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finalizeOrder(@PathVariable Long orderWorkId) {
+        managementOrderWorkService.finalizar(orderWorkId);
+    }
+
     private OrderWorkModel toModel(OrderWork orderWork) {
         return modelMapper.map(orderWork, OrderWorkModel.class);
     }
