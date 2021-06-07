@@ -38,8 +38,8 @@ public class BookingServiceTest {
 
     @Before
     public void setup() {
-        LocalDate checkIn = LocalDate.parse("2021-02-10");
-        LocalDate checkOut = LocalDate.parse("2021-02-20");
+        LocalDate checkIn = LocalDate.parse("2021-03-10");
+        LocalDate checkOut = LocalDate.parse("2021-03-20");
         BookingModel bookingModel = new BookingModel("1", "Wesley", checkIn, checkOut, 2);
 
         Mockito.when(bookingRepository.fingByReserveName(bookingModel.getReserveName()))
