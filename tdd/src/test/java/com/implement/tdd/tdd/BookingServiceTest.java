@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @RunWith(SpringRunner.class)
 public class BookingServiceTest {
 
@@ -49,7 +51,7 @@ public class BookingServiceTest {
         String name = "Wesley";
         int days = bookingService.daysCalculatorWithDatabase(name);
 
-        Assertions.assertEquals(days, 10);
+        assertEquals(days, 10);
     }
 
 }
