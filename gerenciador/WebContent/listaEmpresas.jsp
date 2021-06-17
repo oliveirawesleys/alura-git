@@ -11,6 +11,11 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
+	
+		<c:if test="${not empty empresa }">
+			Empresa ${empresa} cadastrada com sucesso!<br />
+		</c:if>
+		
 		Java Standard Taglib: <br />
 		
 		
